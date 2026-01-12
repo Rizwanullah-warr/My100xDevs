@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Linux CLI Cheat-Sheet</title>
+<style>
+body{font-family:Segoe UI,Helvetica,Arial,sans-serif;margin:0;padding:0;background:#fff;color:#222}
+h1{background:#004d99;color:#fff;margin:0;padding:12px;text-align:center;font-size:1.4em}
+table{width:100%;border-collapse:collapse;font-size:0.92em}
+td,th{padding:5px 8px;border-bottom:1px solid #ddd;vertical-align:top}
+th{background:#f3f3f3;font-weight:600;text-align:left}
+.cmd{color:#004d99;font-weight:600}
+.desc{font-size:0.95em}
+@media print{
+  body{background:#fff;color:#000}
+  h1{background:#004d99!important;color:#fff!important;-webkit-print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<h1>Linux CLI Cheat-Sheet (Rahul’s List Explained)</h1>
+<table>
+<thead><tr><th>#</th><th>Command</th><th>What it does / why you care</th></tr></thead>
+<tbody>
+<tr><td>1</td><td class="cmd">pwd</td><td class="desc">Print absolute path of present working directory.</td></tr>
+<tr><td>2</td><td class="cmd">ls</td><td class="desc">List names of files &amp; dirs (alphabetical).</td></tr>
+<tr><td>3</td><td class="cmd">ls -R</td><td class="desc">Recurse into sub-dirs and list everything.</td></tr>
+<tr><td>4</td><td class="cmd">ls -t</td><td class="desc">Sort by modification time, newest first.</td></tr>
+<tr><td>5</td><td class="cmd">ls -l</td><td class="desc">Long format: perms, owner, size, date, name.</td></tr>
+<tr><td>6</td><td class="cmd">ls -lt</td><td class="desc">Long listing sorted by time.</td></tr>
+<tr><td>8</td><td class="cmd">ls -la</td><td class="desc">Long + show hidden files (dot-files).</td></tr>
+<tr><td>9</td><td class="cmd">ls -lRa</td><td class="desc">Long, recursive, all files (hidden too).</td></tr>
+<tr><td>10</td><td class="cmd">ls -lr</td><td class="desc">Reverse whatever order is currently used.</td></tr>
+<tr><td>11</td><td class="cmd">ls -s</td><td class="desc">Show allocated blocks next to each name.</td></tr>
+<tr><td>12</td><td class="cmd">ls *.js</td><td class="desc">List only JavaScript files.</td></tr>
+<tr><td>13</td><td class="cmd">ls Zoo*</td><td class="desc">List files whose names start with “Zoo”.</td></tr>
+<tr><td>14</td><td class="cmd">ls ..</td><td class="desc">List parent directory without moving.</td></tr>
+<tr><td>15</td><td class="cmd">cd</td><td class="desc">Change directory (home dir if no arg).</td></tr>
+<tr><td>16</td><td class="cmd">cd ..</td><td class="desc">Go up one level.</td></tr>
+<tr><td>17</td><td class="cmd">cd ../../</td><td class="desc">Go up two levels.</td></tr>
+<tr><td>18</td><td class="cmd">touch f</td><td class="desc">Create empty file or update its timestamp.</td></tr>
+<tr><td>19</td><td class="cmd">cat f</td><td class="desc">Dump whole file to terminal.</td></tr>
+<tr><td>20</td><td class="cmd">cat &gt; f</td><td class="desc">Type text; Ctrl-D saves &amp; overwrites file.</td></tr>
+<tr><td>21</td><td class="cmd">cat &gt;&gt; f</td><td class="desc">Append typed text to file.</td></tr>
+<tr><td>22</td><td class="cmd">mkdir d</td><td class="desc">Create directory “d”.</td></tr>
+<tr><td>23</td><td class="cmd">mkdir d &amp;&amp; cd d</td><td class="desc">Create and step inside in one go.</td></tr>
+<tr><td>24</td><td class="cmd">mkdir -p a/b/c</td><td class="desc">Create nested directory path.</td></tr>
+<tr><td>25</td><td class="cmd">mv old new</td><td class="desc">Rename or move file/dir.</td></tr>
+<tr><td>26</td><td class="cmd">mv path/old path/new</td><td class="desc">Same as 25 with full paths.</td></tr>
+<tr><td>27</td><td class="cmd">cp f new</td><td class="desc">Copy file.</td></tr>
+<tr><td>28</td><td class="cmd">cp -r d new</td><td class="desc">Copy directory recursively.</td></tr>
+<tr><td>29</td><td class="cmd">rm f</td><td class="desc">Delete file (irreversible).</td></tr>
+<tr><td>30</td><td class="cmd">rm -r d</td><td class="desc">Delete directory and everything inside.</td></tr>
+<tr><td>31</td><td class="cmd">chmod ugo-rwx f</td><td class="desc">Remove all permissions from everybody.</td></tr>
+<tr><td>31b</td><td class="cmd">chmod -R ugo-rwx d</td><td class="desc">Same, recursive for directory.</td></tr>
+<tr><td>32</td><td class="cmd">chmod u+x f</td><td class="desc">Give owner execute permission.</td></tr>
+<tr><td>33</td><td class="cmd">chmod g+wx f</td><td class="desc">Give group write &amp; execute.</td></tr>
+<tr><td>34</td><td class="cmd">chmod u-x f</td><td class="desc">Remove owner execute.</td></tr>
+<tr><td>35</td><td class="cmd">chmod 664 f</td><td class="desc">Numeric: rw-rw-r--.</td></tr>
+<tr><td>36</td><td class="cmd">echo 'msg'</td><td class="desc">Print message to terminal.</td></tr>
+<tr><td>37</td><td class="cmd">head f</td><td class="desc">First 10 lines.</td></tr>
+<tr><td>38</td><td class="cmd">tail f</td><td class="desc">Last 10 lines.</td></tr>
+<tr><td>39</td><td class="cmd">head -20 f</td><td class="desc">First 20 lines.</td></tr>
+<tr><td>40</td><td class="cmd">tail -n +25 f | head -5</td><td class="desc">Lines 25-29 only.</td></tr>
+<tr><td>41</td><td class="cmd">wc f</td><td class="desc">Lines, words, characters count.</td></tr>
+<tr><td>42</td><td class="cmd">grep "pat" f</td><td class="desc">Show lines containing pattern.</td></tr>
+<tr><td>43</td><td class="cmd">grep "pat" f | wc -l</td><td class="desc">Count matching lines.</td></tr>
+<tr><td>44</td><td class="cmd">grep -c "pat" f</td><td class="desc">Same as 43, built-in count.</td></tr>
+<tr><td>45</td><td class="cmd">grep -h "pat" f</td><td class="desc">Suppress file name prefix.</td></tr>
+<tr><td>46</td><td class="cmd">grep -hi "pat" f</td><td class="desc">Case-insensitive + -h.</td></tr>
+<tr><td>47</td><td class="cmd">grep -hir "pat" d</td><td class="desc">Recursive, case-insensitive search.</td></tr>
+<tr><td>48</td><td class="cmd">grep -hin "pat" f</td><td class="desc">Show line numbers too.</td></tr>
+<tr><td>49</td><td class="cmd">grep -hinw "pat" f</td><td class="desc">Whole-word, case-insensitive, numbered.</td></tr>
+<tr><td>50</td><td class="cmd">grep -o "pat" f</td><td class="desc">Print only the matched text.</td></tr>
+<tr><td>51</td><td class="cmd">grep -w "pat" f</td><td class="desc">Whole-word match.</td></tr>
+<tr><td>52</td><td class="cmd">history</td><td class="desc">List previous commands.</td></tr>
+<tr><td>53</td><td class="cmd">bash script</td><td class="desc">Run file as Bash program.</td></tr>
+<tr><td>54</td><td class="cmd">grep "ERROR" log</td><td class="desc">All error lines.</td></tr>
+<tr><td>55</td><td class="cmd">grep -v "INFO" log</td><td class="desc">Invert: skip INFO lines.</td></tr>
+<tr><td>56</td><td class="cmd">grep -A 5 ERROR log</td><td class="desc">Error line + 5 after.</td></tr>
+<tr><td>56b</td><td class="cmd">grep -B 5 ERROR log</td><td class="desc">5 lines before error.</td></tr>
+<tr><td>56c</td><td class="cmd">grep -C 5 ERROR log</td><td class="desc">5 lines before &amp; after.</td></tr>
+<tr><td>57</td><td class="cmd">sed -n '/ERROR/ p' f</td><td class="desc">Print only ERROR lines.</td></tr>
+<tr><td>58</td><td class="cmd">sed 's/ERROR/CRITICAL/' f</td><td class="desc">Replace first ERROR per line.</td></tr>
+<tr><td>59</td><td class="cmd">sed -ibackup 's/E/C/' f</td><td class="desc">In-place edit with backup.</td></tr>
+<tr><td>60</td><td class="cmd">sed '3 s/E/C/' f</td><td class="desc">Replace only on line 3.</td></tr>
+<tr><td>60b</td><td class="cmd">sed '3,5 s/E/C/' f</td><td class="desc">Replace on lines 3-5.</td></tr>
+<tr><td>60c</td><td class="cmd">sed -n '3,/ERROR/ p' f</td><td class="desc">Print from line 3 to first ERROR.</td></tr>
+<tr><td>61</td><td class="cmd">awk '/ERROR/{print $0}' f</td><td class="desc">Print ERROR lines.</td></tr>
+<tr><td>62</td><td class="cmd">awk '{gsub(/E/,"C"); print}' f</td><td class="desc">Global replace E→C.</td></tr>
+<tr><td>63</td><td class="cmd">awk 'BEGIN{print "HEADER"} {print} END{print "FOOTER"}' f</td><td class="desc">Add header &amp; footer.</td></tr>
+<tr><td>64</td><td class="cmd">awk '{print $1, $2}' f</td><td class="desc">First two columns.</td></tr>
+<tr><td>65</td><td class="cmd">awk -F"," '{print $1, $2}' f</td><td class="desc">CSV: first two fields.</td></tr>
+<tr><td>66</td><td class="cmd">awk '{count[$2]++} END{print count["ERROR"]}' f</td><td class="desc">Count occurrences in 2nd column.</td></tr>
+<tr><td>67</td><td class="cmd">awk '$1>1598863888' log</td><td class="desc">Rows whose first column &gt; epoch.</td></tr>
+</tbody>
+</table>
+</body>
+</html>
