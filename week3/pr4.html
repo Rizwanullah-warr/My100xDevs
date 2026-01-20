@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <h1>Todo list</h1>
+  <div id="todos">
+    <div id="todo-1">
+      <h4>1. Take class</h4>
+      <button onclick="deleteTodo(1)">delete</button>
+    </div>
+    <div id="todo-2">
+      <h4>2. Go out to eat</h4>
+      <button onclick="deleteTodo(2)">delete</button>
+    </div>
+  </div>
+  <div>
+    <input id="inp" type="text"></input>
+    <button onclick="addTodo()">Add Todo</button>
+  </div>
+</body>
+
+<script>
+  function addTodo() {
+
+    const element=document.querySelector("inp");
+    const newElement=document.createElement("div");
+    newElement.innerHTML=Element.value;
+    const parentEl=document.getElementById("todos");
+
+    parentEl.appendChild(newElement);
+    
+    
+//     this is the main part
+    
+//     function addTodo() {
+//   // Step 1: Find the text box
+//   const inputEl = document.getElementById("inp");
+  
+//   // Step 2: Create a new empty todo box
+//   const textNode = document.createElement("div");
+  
+//   // Step 3: Put what you typed into the new box
+//   textNode.innerHTML = inputEl.value;
+  
+//   // Step 4: Find the main todos container
+//   const parentEl = document.getElementById("todos");
+  
+//   // Step 5: Add the new todo box to the container
+//   parentEl.appendChild(textNode);
+// }
+
+
+
+  }
+</script>
+
+</html>
+
+
