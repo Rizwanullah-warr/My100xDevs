@@ -1,5 +1,5 @@
 {
-  "name": "week4",
+  "name": "100xdevs",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -8,5 +8,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "chalk": "^5.6.2"
+  }
 }
