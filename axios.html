@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    axios
+    <div id="posts"></div>
+
+
+</body>
+
+<script>
+ 
+
+    async function GetRecenetPost() {
+
+    
+
+       
+         
+        const responses = await axios.get("https://jsonplaceholder.typicode.com/posts/1");
+        document.getElementById("posts").innerHTML=responses.data.title;
+
+
+
+    }
+    GetRecenetPost();
+   
+</script>
+        
+</html>
