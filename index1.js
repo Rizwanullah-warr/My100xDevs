@@ -8,8 +8,15 @@ const app=express();
     requestCount=requestCount+1;
     console.log("total number of request=+" +requestCount);
        // req.requestCount=requestCount;
-       next();
+     //req.name="rizwanullwahrr02@gmail.com";
+     
+     res.json({
+        message:"i ended the request early",
+     })
 
+
+       next();
+      
     }
 
 
@@ -19,12 +26,14 @@ const app=express();
     const a=parseInt(req.query.a);
     //this is the varible that we will access in brwoser
     const b=parseInt(req.query.b);
+    console.log(req.name);
     res.json({
         answer:a+b,
     })
 
     }
 
+    //better routin ,addd database ,middlwares
 
 app.get("/sum",requestIncreaser,realSumhandler)
 
