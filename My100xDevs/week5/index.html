@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Posts
+    <div id="posts"></div>
+
+
+</body>
+
+<script>
+ 
+
+    async function GetRecenetPost() {
+
+    
+
+        console.log("befroe sending request");
+         
+        const responses = await fetch("https://jsonplaceholder.typicode.com/posts/1");
+        const data=await responses.json();
+         console.log(data);
+
+         console.log("after sending request");
+         document.getElementById("posts").innerHTML=data.body;
+
+
+
+    }
+    GetRecenetPost();
+   
+</script>
+        
+</html>
