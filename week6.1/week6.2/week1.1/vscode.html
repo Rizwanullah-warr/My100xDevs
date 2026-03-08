@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VS Code Design</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="logo">Visual Studio Code</div>
+    <nav class="nav-links">
+      <a href="#">Docs</a>
+      <a href="#">Updates</a>
+      <a href="#">Blog</a>
+      <a href="#">API</a>
+      <a href="#">Extensions</a>
+      <a href="#">FAQ</a>
+      <a href="#">Learn</a>
+    </nav>
+    <div class="search-bar">
+      <input type="text" placeholder="Search Docs">
+    </div>
+  </header>
+  
+  <main class="main-section">
+    <div class="tagline">
+      <h1>Code Editing. Redefined.</h1>
+      <button>Download for macOS</button>
+      <a href="#">Web, Insiders edition, or other platforms</a>
+    </div>
+    <div class="code-preview">
+      <div class="sidebar">
+        <ul>
+          <li>Explorer</li>
+          <li>Search</li>
+          <li>Source Control</li>
+          <li>Run and Debug</li>
+        </ul>
+      </div>
+      <div class="editor">
+        <div class="tabs">
+          <span>button.ts</span>
+          <span>button.css</span>
+        </div>
+        <div class="code-area">
+          <pre>
+interface ButtonProps {
+  onClick: () => void;
+  text: string;
+}
+const Button: React.FC<ButtonProps> = ({ onClick, text }) => {
+  return <button onClick={onClick}>{text}</button>;
+};
+export default Button;
+          </pre>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <footer class="footer">
+    <p>Code in any language</p>
+    <div class="languages">
+      <span>JavaScript</span>
+      <span>TypeScript</span>
+      <span>Python</span>
+    </div>
+  </footer>
+</body>
+</html>

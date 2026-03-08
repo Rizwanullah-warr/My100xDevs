@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do app</title>
+</head>
+<body>
+    <input type="text">    
+         
+
+    <button onclick="addTodo()"> Add Todo!</button>
+    <script>
+
+        let ctr=1;
+
+
+        function deleteTodo(index){
+
+            const element=document.getElementById(index);
+            element.parentNode.removeChild(element);
+        }
+
+
+        function addTodo(){
+            const inputEl=document.querySelector("input");
+            const value=inputEl.value;
+            
+            //here we extract the text from the input element
+
+            const newDivEl=document.createElement("div");
+            const currenId= ctr;
+            newDivEl.setAttribute("id",currenId);
+            
+           // newDivEl.innerHTML=value;
+            //instead of the upper line we can also do the following procedure with adding Delet functionlaity
+             newDivEl.innerHTML="<div>"+ value +'</div><button onclick="deleteTodo('+ currenId +')">delete</button>';
+            ctr=ctr+1;
+            document.querySelector("body").appendChild(newDivEl);
+
+
+
+
+            //now we want to delete the full button of delete that uppper we create
+
+        }
+    </script>
+</body>
+</html>
