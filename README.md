@@ -1,0 +1,1 @@
+"# My 100xDevs Journey"  ""  "## Weeks Completed:"  "- Week 1.1: Introduction"  "- Week 1.2: JavaScript Basics"  "- Week 2: Arrays & Objects"  "- Week 3: Functions"  "- Week 4: DOM"  "- Week 5: Map/Filter"  "- Week 6: JWT Authentication" 
