@@ -1,5 +1,20 @@
 {
-  "name": "week6.1",
+<<<<<<< HEAD
+  "name": "jwt-auth-app",
+  "version": "1.0.0",
+  "description": "A fully functional JWT authentication system with persistence.",
+  "main": "jwts.js",
+  "scripts": {
+    "start": "node jwts.js",
+    "dev": "nodemon jwts.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^4.22.1",
+    "jsonwebtoken": "^9.0.3"
+  }
+=======
+  "name": "100xdevs",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -8,8 +23,11 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
-    "jsonwebtoken": "^9.0.3"
-  }
+    "chalk": "^5.6.2",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {},
+  "description": ""
+>>>>>>> 0d3847f42b4329481a69bf75571367bed0ce9f31
 }

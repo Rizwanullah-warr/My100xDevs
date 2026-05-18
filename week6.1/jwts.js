@@ -1,129 +1,122 @@
-const express=require('express');
-const jwt=require('jsonwebtoken');
-const JWT_SECRET="rizwanullahwarr02@gmail.com"
+const express = require('express');
+const jwt = require('jsonwebtoken');
+const path = require('path');
+const fs = require('fs');
 
+const app = express();
+const PORT = 3000;
+const JWT_SECRET = "rizwanullahwarr02@gmail.com";
+const DB_FILE = path.join(__dirname, 'users.json');
 
-const app=express();
+// Helper to load users from file
+function loadUsers() {
+    try {
+        if (!fs.existsSync(DB_FILE)) {
+            fs.writeFileSync(DB_FILE, JSON.stringify([]));
+            return [];
+        }
+        const data = fs.readFileSync(DB_FILE, 'utf8');
+        return JSON.parse(data);
+    } catch (err) {
+        console.error("Error loading users:", err);
+        return [];
+    }
+}
+
+// Helper to save users to file
+function saveUsers(users) {
+    try {
+        fs.writeFileSync(DB_FILE, JSON.stringify(users, null, 2));
+    } catch (err) {
+        console.error("Error saving users:", err);
+    }
+}
 
 app.use(express.json());
 
+// Logger
+app.use((req, res, next) => {
+    console.log(`${new Date().toLocaleString()} - ${req.method} ${req.url}`);
+    next();
+});
 
-const  users=[]
+// CORS
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, token");
+    if (req.method === "OPTIONS") return res.sendStatus(200);
+    next();
+});
 
+// Serve frontend
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "index.html"));
+});
 
+/**
+ * Authentication Middleware
+ */
+function auth(req, res, next) {
+    const token = req.headers.token;
+    if (!token) return res.status(401).json({ message: "No token provided." });
 
+    try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+        req.username = decoded.username;
+        next();
+    } catch (err) {
+        return res.status(401).json({ message: "Invalid token." });
+    }
+}
 
+// SIGNUP
+app.post("/signup", (req, res) => {
+    const { username, password } = req.body;
+    if (!username || !password) return res.status(400).json({ message: "Missing fields." });
 
-
-
-app.post("/signup",function(req,res){
-
-    const username=req.body.username;
-    const password=req.body.password;
-
-
-    users.push({
-        username:username,
-        password:password,
-
-
-    })
-
-    res.json({
-        message:"you are signed up"
-    })
-
-    console.log(users);
-
-
-})
-
-app.post("/signin",function(req,res){
-
-    const username=req.body.username;
-    const password=req.body.password;
-
-
-    // const user=users.find(function(u){
-    //     if(u.username==username){
-    //         return true;
-    //     }
-    //     else{
-    //         return false;
-
-    //     }
-    // })
-
-    let foundUser=null;
-    for(let i=0;i<users.length;i++){
-        if(users[i].username==username&& users[i].password==password){
-
-            foundUser=users[i];
-        }
+    const users = loadUsers();
+    if (users.find(u => u.username === username)) {
+        return res.status(400).json({ message: "User already exists." });
     }
 
-    if(foundUser){
-        //const token=generateToken();
-        //convert their username over to a jwt
-        const token=  jwt.sign({ 
-            username:username
-        },JWT_SECRET);
-        //foundUser.token=token;
-        //we do not need to stored in memory varaible anymore
+    users.push({ username, password });
+    saveUsers(users);
+    
+    res.status(201).json({ message: "Signed up successfully." });
+});
 
+// SIGNIN
+app.post("/signin", (req, res) => {
+    const { username, password } = req.body;
+    const users = loadUsers();
+    const user = users.find(u => u.username === username && u.password === password);
 
-        res.json({
-            token:token,
-        })
-       
+    if (user) {
+        const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: '2h' });
+        res.json({ token });
+    } else {
+        res.status(403).json({ message: "Invalid credentials." });
     }
-    else{
-        res.status(403).send({
+});
 
-            message:"invalid username or password"
-
-        })
+// ME
+app.get("/me", auth, (req, res) => {
+    const users = loadUsers();
+    const user = users.find(u => u.username === req.username);
+    if (user) {
+        res.json({ username: user.username, password: user.password });
+    } else {
+        res.status(404).json({ message: "User not found." });
     }
+});
 
-
-    console.log(users);
-
-})
-
-
-app.get("/me",function(req,res){
-    const token=req.headers.token
-    //but now wil send the jwt
-    const decodeInformation=jwt.verify(token,JWT_SECRET);//here we decode the jwt in to username 
-    const username=decodeInformation.username;
-
-
-    let foundUser=null;
-
-    for (let i=0; i<users.length;i++){
-        if(users[i].username==username)
-        {
-            foundUser=users[i];
-        }
-    }
-
-    //in the upper four lines before that we had the useranme
-    //but now in this loop we want to access the password from db
-
-    if(foundUser){
-        res.json({
-            username:foundUser.username,
-            password:foundUser.password
-        })
-    }
-    else{
-        res.json({
-            message:"token invalid"
-        })
-    }
-})
-
-//you have watched video 1 hour and 11 sec
-
-
-app.listen(3000);
+app.listen(PORT, () => {
+    console.log(`
+🚀 FULLY FUNCTIONAL BACKEND
+----------------------------------
+🌍 Server: http://localhost:${PORT}
+💾 Database: users.json (Persistent)
+----------------------------------
+    `);
+});

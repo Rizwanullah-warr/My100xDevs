@@ -3,92 +3,305 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auth website</title>
+    <title>Modern Auth Portal</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"></script>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #111827;
+            --text-muted: #6b7280;
+            --border: #e5e7eb;
+            --error: #ef4444;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            ring: 2px solid var(--primary);
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 8px;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        button.secondary {
+            background-color: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            margin-top: 12px;
+        }
+
+        button.secondary:hover {
+            background-color: #f9fafb;
+            color: var(--text-main);
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 24px 0;
+        }
+
+        #dashboard {
+            display: none;
+        }
+
+        .info-box {
+            background: #f9fafb;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+
+        .info-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-family: monospace;
+            word-break: break-all;
+        }
+
+        .alert {
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        .alert-error {
+            background: #fef2f2;
+            color: var(--error);
+            border: 1px solid #fee2e2;
+        }
+
+        .alert-success {
+            background: #ecfdf5;
+            color: var(--success);
+            border: 1px solid #d1fae5;
+        }
+    </style>
 </head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"></script>
-
-<script>
-    async  function signup(){
-        const username=document.getElementById("signup-username").value;
-        const password=document.getElementById("signup-userpassword").value;
-
-     const response= await  axios.post("http://localhost:3000/signup",{
-            username:username,
-            password:password
-        }
-        );
-        alert("you are signed in");
-
-
-    }
-
-    async  function signin(){
-        const username=document.getElementById("signin-username").value;
-        const password=document.getElementById("signin-userpassword").value;
-
-     const response= await  axios.post("http://localhost:3000/signin",{
-            username:username,
-            password:password
-        }
-        );
-        //to save the token that returns from backend
-        localStorage.setItem("token",response.data.token);
-
-        alert("you are signed in");
-
-
-    }
-
-    async function getuserInformation() {
-
-      const response=await axios.get("http://localhost:3000/me",
-           {
-            headers:{
-                token:localStorage.getItem("token")
-            }
-        })
-
-        
-        document.getElementById("information").innerHTML="username"+response.data.username+"password"+response.data.password;
-        
-        
-    }
-
-    getuserInformation();
-
-
-    function logout(){
-        localStorage.removeItem("token");
-    }
-        
-    
-</script>
 <body>
 
-    <div>
-         signup 
-    <input id="signup-username"   type="text" name="username" placeholder="username">
-    <input id="signup-userpassword"   type="password" name="password" placeholder="password">
-    <button onclick="signup()" >Submit</button>
-   </div>
+    <div class="container">
+        <!-- Auth View -->
+        <div id="auth-view" class="card">
+            <h1 id="auth-title">Welcome Back</h1>
+            <p class="subtitle" id="auth-subtitle">Please enter your details to sign in.</p>
 
-   <div>
-    signin 
-    <input id="signin-username" type="text" name="username" placeholder="username">
-    <input id="signin-userpassword" type="password" name="password" placeholder="password">
-    <button onclick="signin()"> Submit</button>
-   </div>
+            <div id="alert" class="alert"></div>
 
-   <div>
-    User information
-    <div id="information"></div>
-   </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your username">
+            </div>
 
-   <div>
-    <Button onclick="logout()">Logout</Button>
-   </div>
-   
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="••••••••">
+            </div>
 
+            <button id="main-btn" onclick="handleAuth()">Sign In</button>
+            <button class="secondary" id="toggle-btn" onclick="toggleAuthMode()">Create an account</button>
+        </div>
 
+        <!-- Dashboard View -->
+        <div id="dashboard" class="card">
+            <h1>User Dashboard</h1>
+            <p class="subtitle">Securely logged in</p>
+
+            <div class="info-box">
+                <div class="info-label">Username</div>
+                <div id="display-username" class="info-value">...</div>
+            </div>
+
+            <div class="info-box">
+                <div class="info-label">Password (Fetched from /me)</div>
+                <div id="display-password" class="info-value">...</div>
+            </div>
+
+            <button onclick="logout()" class="secondary">Log Out</button>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "http://localhost:3000";
+        let isSignup = false;
+
+        function toggleAuthMode() {
+            isSignup = !isSignup;
+            const title = document.getElementById('auth-title');
+            const subtitle = document.getElementById('auth-subtitle');
+            const mainBtn = document.getElementById('main-btn');
+            const toggleBtn = document.getElementById('toggle-btn');
+            const alert = document.getElementById('alert');
+
+            alert.style.display = 'none';
+
+            if (isSignup) {
+                title.innerText = "Create Account";
+                subtitle.innerText = "Join us to get started.";
+                mainBtn.innerText = "Sign Up";
+                toggleBtn.innerText = "Already have an account? Sign In";
+            } else {
+                title.innerText = "Welcome Back";
+                subtitle.innerText = "Please enter your details to sign in.";
+                mainBtn.innerText = "Sign In";
+                toggleBtn.innerText = "Create an account";
+            }
+        }
+
+        async function handleAuth() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const alert = document.getElementById('alert');
+
+            if (!username || !password) {
+                showAlert("Username and password are required", "error");
+                return;
+            }
+
+            try {
+                const endpoint = isSignup ? "/signup" : "/signin";
+                const response = await axios.post(`${API_URL}${endpoint}`, {
+                    username,
+                    password
+                });
+
+                if (isSignup) {
+                    showAlert("Successfully signed up! You can now sign in.", "success");
+                    toggleAuthMode();
+                } else {
+                    localStorage.setItem("token", response.data.token);
+                    showDashboard();
+                }
+            } catch (error) {
+                const message = error.response?.data?.message || "An error occurred";
+                showAlert(message, "error");
+            }
+        }
+
+        function showAlert(message, type) {
+            const alert = document.getElementById('alert');
+            alert.innerText = message;
+            alert.style.display = 'block';
+            alert.className = `alert alert-${type}`;
+        }
+
+        async function showDashboard() {
+            const token = localStorage.getItem("token");
+            if (!token) return;
+
+            try {
+                const response = await axios.get(`${API_URL}/me`, {
+                    headers: { token }
+                });
+
+                document.getElementById('display-username').innerText = response.data.username;
+                document.getElementById('display-password').innerText = response.data.password;
+
+                document.getElementById('auth-view').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+            } catch (error) {
+                localStorage.removeItem("token");
+                document.getElementById('auth-view').style.display = 'block';
+                document.getElementById('dashboard').style.display = 'none';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("token");
+            location.reload();
+        }
+
+        // Check for token on load
+        if (localStorage.getItem("token")) {
+            showDashboard();
+        }
+    </script>
 </body>
 </html>
